@@ -1,0 +1,27 @@
+{
+  "name": "nltestagent",
+  "version": "1.0.0",
+  "description": "AI-first E2E test orchestration — describe test scenarios in plain English, execute them in real browsers via WebdriverIO and AWS Bedrock",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "orchestrate": "ts-node src/cli.ts"
+  },
+  "keywords": ["test-automation", "nlp", "ai-testing", "webdriverio", "aws-bedrock", "e2e", "semantic-testing"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.500.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "webdriverio": "^8.36.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
