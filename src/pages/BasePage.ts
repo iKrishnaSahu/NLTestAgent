@@ -70,7 +70,7 @@ export abstract class BasePage {
   /**
    * Try a list of selectors and return the first one that exists & is displayed.
    */
-  async findFirstVisible(selectors: string[]): Promise<WebdriverIO.Element | null> {
+  async findFirstVisible(selectors: string[]): Promise<any | null> {
     for (const sel of selectors) {
       try {
         const el = await this.browser.$(sel);

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { runOrchestrator } from "../run";
+import { runOrchestrator } from "../run.js";
 
 const router = Router();
 

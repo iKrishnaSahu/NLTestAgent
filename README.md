@@ -21,7 +21,7 @@ npm run orchestrate -- "Validate hotel search in Mumbai"
 ```
 
 The agent:
-1. Parses your natural language intent via **AWS Bedrock (Claude 3.5 Sonnet)** or a zero-latency local semantic fallback
+1. Parses your natural language intent via **AWS Bedrock (Claude 3.5 Sonnet)** to provide the correct execution path. *(Note: a local semantic fallback exists, but it is purely a bypass for local testing)*
 2. Routes to the best-matching registered workflow
 3. Executes full browser automation via **WebdriverIO** against live portals
 4. Returns a structured `PASSED` / `FAILED` report with per-step detail and an auto-captured failure screenshot
@@ -63,7 +63,7 @@ The key insight: **test intent should be expressed as requirements, not code**. 
 | Step | What happens |
 |---|---|
 | 1. **Prompt** | You type a plain-English test description |
-| 2. **Route** | AWS Bedrock (Claude 3.5 Sonnet) or local keyword matcher maps it to a workflow |
+| 2. **Route** | AWS Bedrock (Claude 3.5 Sonnet) analyzes intent and maps it to a workflow |
 | 3. **Execute** | A DSL flow drives a real Chrome browser via WebdriverIO POMs |
 | 4. **Report** | A structured PASSED/FAILED result with step details and screenshot on failure |
 
@@ -85,19 +85,20 @@ The key insight: **test intent should be expressed as requirements, not code**. 
 │                  │                                                   │
 │       ┌──────────┼──────────┐                                        │
 │       ▼          ▼          ▼                                        │
-│ ┌──────────┐ ┌────────┐ ┌─────────┐                                 │
-│ │ Workflow  │ │Workflow│ │ Report  │                                  │
-│ │ Selector  │ │Executor│ │Generator│                                 │
-│ │(AI Layer) │ │        │ │         │                                 │
-│ └────┬─────┘ └───┬────┘ └─────────┘                                 │
-│      │           │                                                   │
-│      ▼           ▼                                                   │
-│ ┌──────────┐ ┌─────────────────────────────┐                        │
-│ │  AWS     │ │      Workflow Registry        │                       │
-│ │ Bedrock  │ │  validateFlightSearchFlow     │                       │
-│ │(Claude)  │ │  validateHotelSearchFlow      │                       │
-│ └──────────┘ └──────────┬──────────────────┘                        │
-│                         │                                            │
+│ ┌────────────────┐  ┌────────┐ ┌─────────┐                           │
+│ │ Workflow       │  │Workflow│ │ Report  │                           │
+│ │ Selector       │  │Executor│ │Generator│                           │
+│ │(AI Layer)      │  │        │ │         │                           │
+│ └────┬───────┬───┘  └───┬────┘ └─────────┘                           │
+│      │       │          │                                            │
+│      │       │[Local    ▼                                            │
+│      ▼       │ Bypass]┌─────────────────────────────┐                │
+│ ┌──────────┐ │        │      Workflow Registry      │                │
+│ │  AWS     │ └───────►│  validateFlightSearchFlow   │                │
+│ │ Bedrock  ├─────────►│  validateHotelSearchFlow    │                │
+│ │(Claude)  │          └──────────┬──────────────────┘                │
+│ └──────────┘                     │                                   │
+│                                  │                                   │
 │              ┌──────────┴──────────┐                                 │
 │              ▼                     ▼                                 │
 │     ┌──────────────────┐  ┌──────────────────┐                      │
@@ -204,10 +205,9 @@ wdio-agent/
 | Language | TypeScript | 5.4.x | Type safety across all layers |
 | Browser Automation | WebdriverIO | 8.36.x | Cross-browser E2E test execution |
 | Browser | Google Chrome | 148.x | Target browser (local) |
-| AI / LLM | AWS Bedrock (Claude 3.5 Sonnet) | `@aws-sdk/client-bedrock-runtime` 3.x | Natural language → workflow routing |
+| AI / LLM | AWS Bedrock (Claude 3.5 Sonnet) | `@aws-sdk/client-bedrock-runtime` | Natural language → workflow routing |
 | HTTP Server | Express | 4.19.x | REST API interface |
 | Runtime | ts-node | 10.9.x | Direct TS execution (dev mode) |
-| Build | tsc (TypeScript Compiler) | 5.4.x | Production compilation to JS |
 
 ---
 
@@ -219,17 +219,18 @@ wdio-agent/
 
 This is the intelligence layer. Given a natural language string, it determines which registered workflow should be executed.
 
-**With Bedrock enabled (`BYPASS_BEDROCK=false`):**
+**With Bedrock enabled (`BYPASS_BEDROCK=false`) — The Real Flow:**
 - Builds a structured prompt listing all registered workflows and their descriptions
-- Sends it to Claude 3.5 Sonnet via `ConverseCommand`
+- Sends it to Claude 3.5 Sonnet via AWS Bedrock (`ConverseCommand`)
+- Bedrock analyzes the natural language intent and provides the correct workflow path
 - Parses the JSON response to extract the selected workflow name
 - Handles Markdown-wrapped JSON (`\`\`\`json ... \`\`\``) gracefully
 
-**Local semantic fallback (`BYPASS_BEDROCK=true`):**
-- Fast keyword-based routing (no API call)
+**Local semantic fallback (`BYPASS_BEDROCK=true`) — The Bypass Flow:**
+- *This is just a bypass/mock mechanism for local testing without AWS credentials.*
+- Uses simple keyword-based routing (no API call)
 - Matches tokens like `flight`, `fly`, `pune`, `delhi` → `validateFlightSearchFlow`
 - Matches `hotel`, `stay`, `room`, `mumbai` → `validateHotelSearchFlow`
-- Zero latency, zero cost, suitable for CI/CD environments
 
 ```typescript
 // Example: How the AI selects workflows

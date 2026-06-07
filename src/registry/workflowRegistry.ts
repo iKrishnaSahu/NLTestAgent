@@ -1,5 +1,5 @@
-import { validateFlightSearchFlow, WorkflowResult } from "../dsl/flightSearchFlow";
-import { validateHotelSearchFlow } from "../dsl/hotelSearchFlow";
+import { validateFlightSearchFlow, WorkflowResult } from "../dsl/flightSearchFlow.js";
+import { validateHotelSearchFlow } from "../dsl/hotelSearchFlow.js";
 
 export interface Workflow {
   name: string;

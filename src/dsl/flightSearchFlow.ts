@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { createBrowser } from "../browser/browserFactory";
-import { EaseMyTripHomePage } from "../pages/EaseMyTripHomePage";
-import { FlightResultsPage } from "../pages/FlightResultsPage";
+import { createBrowser } from "../browser/browserFactory.js";
+import { EaseMyTripHomePage } from "../pages/EaseMyTripHomePage.js";
+import { FlightResultsPage } from "../pages/FlightResultsPage.js";
 
 export interface WorkflowResult {
   status: "PASSED" | "FAILED";

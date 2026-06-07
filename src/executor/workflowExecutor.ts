@@ -1,5 +1,5 @@
-import { getWorkflow } from "../registry/workflowRegistry";
-import { WorkflowResult } from "../dsl/flightSearchFlow";
+import { getWorkflow } from "../registry/workflowRegistry.js";
+import { WorkflowResult } from "../dsl/flightSearchFlow.js";
 
 /**
  * Retrieves the selected workflow by name and runs its execute function.

@@ -3,25 +3,35 @@
   "version": "1.0.0",
   "description": "AI-first E2E test orchestration — describe test scenarios in plain English, execute them in real browsers via WebdriverIO and AWS Bedrock",
   "main": "dist/server.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "ts-node src/server.ts",
-    "orchestrate": "ts-node src/cli.ts"
+    "dev": "tsx src/server.ts",
+    "orchestrate": "tsx src/cli.ts"
   },
-  "keywords": ["test-automation", "nlp", "ai-testing", "webdriverio", "aws-bedrock", "e2e", "semantic-testing"],
+  "keywords": [
+    "test-automation",
+    "nlp",
+    "ai-testing",
+    "webdriverio",
+    "aws-bedrock",
+    "e2e",
+    "semantic-testing"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.500.0",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "webdriverio": "^8.36.0"
+    "@aws-sdk/client-bedrock-runtime": "^3.1063.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "webdriverio": "^9.27.2"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.12.7",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,4 +1,4 @@
-import { runOrchestrator } from "./run";
+import { runOrchestrator } from "./run.js";
 import dotenv from "dotenv";
 
 dotenv.config();

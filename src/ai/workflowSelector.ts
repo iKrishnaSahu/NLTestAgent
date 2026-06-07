@@ -1,6 +1,6 @@
-import { invokeBedrock } from "./bedrockClient";
-import { buildWorkflowSelectionPrompt } from "./promptBuilder";
-import { getAllWorkflows, getWorkflow, Workflow } from "../registry/workflowRegistry";
+import { invokeBedrock } from "./bedrockClient.js";
+import { buildWorkflowSelectionPrompt } from "./promptBuilder.js";
+import { getAllWorkflows, getWorkflow, Workflow } from "../registry/workflowRegistry.js";
 
 /**
  * Analyzes the user's natural language request and uses AWS Bedrock

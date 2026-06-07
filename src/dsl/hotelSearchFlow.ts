@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { WorkflowResult } from "./flightSearchFlow";
-import { createBrowser } from "../browser/browserFactory";
-import { EaseMyTripHotelsPage } from "../pages/EaseMyTripHotelsPage";
-import { HotelResultsPage } from "../pages/HotelResultsPage";
+import { WorkflowResult } from "./flightSearchFlow.js";
+import { createBrowser } from "../browser/browserFactory.js";
+import { EaseMyTripHotelsPage } from "../pages/EaseMyTripHotelsPage.js";
+import { HotelResultsPage } from "../pages/HotelResultsPage.js";
 
 /**
  * validateHotelSearchFlow

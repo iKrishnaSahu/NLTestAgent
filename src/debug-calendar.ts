@@ -47,8 +47,9 @@ async function run() {
 
     // Check iframes
     const iframes = await browser.$$("iframe");
-    console.log(`\nNumber of iframes: ${iframes.length}`);
-    for (let i = 0; i < iframes.length; i++) {
+    const iframesLen = await iframes.length;
+    console.log(`\nNumber of iframes: ${iframesLen}`);
+    for (let i = 0; i < iframesLen; i++) {
       const src = await iframes[i].getAttribute("src") || "(no src)";
       const id = await iframes[i].getAttribute("id") || "(no id)";
       const cls = await iframes[i].getAttribute("class") || "(no class)";
@@ -57,9 +58,10 @@ async function run() {
 
     // Check total TDs
     const tds = await browser.$$("td");
-    console.log(`\nTotal TDs found: ${tds.length}`);
-    if (tds.length > 0) {
-      for (let i = 0; i < Math.min(5, tds.length); i++) {
+    const tdsLen = await tds.length;
+    console.log(`\nTotal TDs found: ${tdsLen}`);
+    if (tdsLen > 0) {
+      for (let i = 0; i < Math.min(5, tdsLen); i++) {
         const text = await tds[i].getText();
         const cls = await tds[i].getAttribute("class") || "";
         const visible = await tds[i].isDisplayed();

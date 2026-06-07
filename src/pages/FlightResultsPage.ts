@@ -1,4 +1,4 @@
-import { BasePage } from "./BasePage";
+import { BasePage } from "./BasePage.js";
 
 /**
  * FlightResultsPage — Page Object Model for the EaseMyTrip flight search results page.

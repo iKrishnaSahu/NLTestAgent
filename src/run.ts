@@ -1,6 +1,6 @@
-import { selectWorkflow } from "./ai/workflowSelector";
-import { executeWorkflow } from "./executor/workflowExecutor";
-import { generateReport } from "./reports/reportGenerator";
+import { selectWorkflow } from "./ai/workflowSelector.js";
+import { executeWorkflow } from "./executor/workflowExecutor.js";
+import { generateReport } from "./reports/reportGenerator.js";
 
 /**
  * Reusable core orchestration function.
